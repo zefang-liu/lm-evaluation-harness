@@ -1,0 +1,3 @@
+task: secqa_v2_generative
+dataset_name: secqa_v2
+include: secqa_generative_template.yaml

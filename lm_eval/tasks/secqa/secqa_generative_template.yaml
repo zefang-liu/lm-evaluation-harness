@@ -1,0 +1,29 @@
+dataset_path: zefang-liu/secqa
+dataset_kwargs: null
+output_type: generate_until
+training_split: null
+fewshot_split: dev
+validation_split: val
+test_split: test
+description: "The following are multiple choice questions (with answers) about computer security.\n\n"
+doc_to_text: "Question: {{Question}}\nA) {{A}}\nB) {{B}}\nC) {{C}}\nD) {{D}}\nAnswer: "
+doc_to_target: "{{Answer}}"
+target_delimiter: ""
+generation_kwargs:
+  until:
+    - "\n\n"
+    - "</s>"
+  do_sample: false
+  temperature: 0.0
+filter_list:
+  - name: "get-answer"
+    filter:
+      - function: "regex"
+        regex_pattern: "([A-D])(?=[)]?)"
+      - function: "take_first"
+metric_list:
+  - metric: exact_match
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 0.0
